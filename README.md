@@ -1,6 +1,6 @@
 # Go4Hackers-Vuln-Scanner
 
-[![.github/workflows/tests.yml](https://github.com/sqlmapproject/sqlmap/actions/workflows/tests.yml/badge.svg)](https://github.com/sqlmapproject/sqlmap/actions/workflows/tests.yml) [![Python 2.6|2.7|3.x](https://img.shields.io/badge/python-2.6|2.7|3.x-yellow.svg)](https://www.python.org/) [![License](https://img.shields.io/badge/license-GPLv2-red.svg)](https://raw.githubusercontent.com/sqlmapproject/sqlmap/master/LICENSE) [![Twitter](https://img.shields.io/badge/twitter-@sqlmap-blue.svg)](https://twitter.com/sqlmap)
+[![Go 1.21x](https://img.shields.io/badge/GO-1.21.x-blue.svg)](https://go.dev/) [![License](https://img.shields.io/badge/LICENSE-MIT%20License-red.svg)](https://raw.githubusercontent.com/kwa0x2/Go4Hackers-Vuln-Scanner/master/LICENSE) [![Website](https://img.shields.io/badge/website-nettasec.com-red.svg)](https://nettasec.com/)
 
 Go4Hackers is a simple vulnerability scanner written in Go (Golang) that focuses on identifying directory listing vulnerabilities in URLs based on a specified wordlist. It performs a directory listing attack scan to detect whether the content of the URL directories exposes directory listings.
 
