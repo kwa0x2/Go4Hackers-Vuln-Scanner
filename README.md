@@ -1,5 +1,4 @@
 # Go4Hackers-Vuln-Scanner
-Go4Hackers Small Vulnerability Scanner (directory listing attack)
 
 Go4Hackers is a simple vulnerability scanner written in Go (Golang) that focuses on identifying directory listing vulnerabilities in URLs based on a specified wordlist. It performs a directory listing attack scan to detect whether the content of the URL directories exposes directory listings.
 
