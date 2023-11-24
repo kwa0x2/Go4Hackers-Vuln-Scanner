@@ -8,6 +8,8 @@ Go4Hackers is a simple vulnerability scanner written in Go (Golang) that focuses
 
 - **Directory Listing Scan:** Performs a directory listing attack on URLs.
 - **Wordlist-based Scanning:** Utilizes a provided wordlist to check directory paths.
+- **X-Frame-Options Header Checker:** Checks for the presence of the X-Frame-Options header to prevent Clickjacking attacks.
+- **HTTP Trace Method Checker:** Verifies if the HTTP TRACE method is enabled, potentially exposing security vulnerabilities.
 - **More is coming soon.**
 
 

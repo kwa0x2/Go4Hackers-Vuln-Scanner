@@ -15,12 +15,18 @@ func Commands() {
 		Flags: []cli.Flag{
 			cli.StringFlag{Name: "target", Usage: "Target Web URL"},
 			cli.StringFlag{Name: "wordlist", Usage: "Select wordlist"},
+			cli.BoolFlag{Name:"trace", Usage: "Enables TRACE method checker."},
+			cli.BoolFlag{Name: "x-frame-options", Usage: "Enables X-Frame-Options header checker."},
 			cli.BoolFlag{Name: "dirlisting", Usage: "Enables directory listing vulnerability checker."},
 			cli.IntFlag{Name: "delay", Usage: "Delay in miliseconds between each HTTP request", Value: 0},
 			cli.BoolFlag{Name: "list-wordlists", Usage: ""},
 		},
 
 		Action: func(c *cli.Context) error {
+			if c.NumFlags() == 0 {
+				cli.ShowAppHelp(c)
+				return nil
+			}
 			if c.Bool("list-wordlists") {
 				dirPath := "./wordlists"
 
@@ -36,10 +42,16 @@ func Commands() {
 				}
 			}		
 			if c.String("target") != "" {
+				if c.Bool("trace"){
+					CheckTrace(c.String("target"));
+				}
+				if c.Bool("x-frame-options"){
+					CheckXFrameOptions(c.String("target"));
+				}
 				if c.String("wordlist") != "" {
 					if c.Bool("dirlisting") {
 
-						DirListing(c.String("wordlist"), c.String("target"), c.Int("delay"))
+						CheckDirListing(c.String("wordlist"), c.String("target"), c.Int("delay"))
 					}
 					
 				} else {

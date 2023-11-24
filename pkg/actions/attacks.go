@@ -18,12 +18,18 @@ var (
 	l *log.Logger
 )
 
+func checkError(err error) {
+	if err != nil {
+		fmt.Println(Red("[ERROR] ", err))
+	}
+}
+
 func initLogger() {
 	logsFolderPath := "logs/"
 
 	if err := os.Mkdir(logsFolderPath, os.ModePerm); err != nil && !os.IsExist(err) {
-        log.Fatal(err)
-    }
+		log.Fatal(err)
+	}
 	dateFormat := time.Now().Format("2006-01-02-15-04-05")
 
 	logFileName := fmt.Sprintf("%s%s", logsFolderPath, dateFormat)
@@ -42,19 +48,66 @@ var (
 	Blue   = color.New(color.FgBlue).SprintFunc()
 )
 
-func DirListing(wordlist, target string, delay int) {
-	if !strings.HasSuffix(target, "/"){
-		target+= "/"
+func CheckXFrameOptions(target string) {
+	initLogger()
+	l.Println("[INFO] X-Frame-Options header passive attack started for", target)
+
+	resp, err := http.Get(target)
+	checkError(err)
+	if resp.StatusCode > 400 {
+		l.Println("[NOT VULN] Cannot connect to the", target)
+		fmt.Println(Red("[WARN]"), "Cannot connect to the", Green(target))
+	} else if resp.StatusCode == http.StatusOK {
+		x_frame_options := resp.Header.Get("X-Frame-Options")
+
+		if x_frame_options != "" {
+			l.Println("[VULN] X-Frame-Options header implemented for", target)
+			fmt.Println(Blue("[VULN]"), "[VULN] X-Frame-Options header implemented for", Green(target))
+		} else {
+			l.Println("[VULN] X-Frame-Options header not implemented for", target)
+			fmt.Println(Red("[NOT VULN]"), "[VULN] X-Frame-Options header not implemented for", Green(target))
+		}
+
+	}
+
+}
+
+func CheckTrace(target string) {
+	initLogger()
+	l.Println("[INFO] HTTP Trace attack started for", target)
+
+	client := &http.Client{}
+
+	req, err := http.NewRequest("TRACE", target, nil)
+	checkError(err)
+
+	resp, err := client.Do(req)
+	checkError(err)
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode > 400 {
+		l.Println("[NOT VULN] HTTP TRACE method is not allowed for", target)
+		fmt.Println(Red("[NOT VULN]"), "HTTP TRACE method is not allowed for", Green(target))
+	} else if resp.StatusCode == http.StatusOK {
+		l.Println("[VULN] HTTP TRACE method is allowed for for", target)
+		fmt.Println(Blue("[VULN]"), "HTTP TRACE method is allowed for", Green(target))
+	} else {
+		fmt.Println(Red("Unexpected response status:", resp.Status))
+	}
+}
+
+func CheckDirListing(wordlist, target string, delay int) {
+	if !strings.HasSuffix(target, "/") {
+		target += "/"
 	}
 	initLogger()
-	l.Println("[PARAMS] --target", target ,"--wordlist", wordlist, "--delay", delay)
 	l.Println("[INFO] Directory listing attack started for", target)
 	fmt.Println(Yellow("[INFO]"), "Directory listing attack started for", Green(target))
 
 	file, err := os.Open(wordlist)
-	if err != nil {
-		fmt.Println(Red("[ERROR] ", err))
-	}
+	checkError(err)
+
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
@@ -78,10 +131,10 @@ func DirListing(wordlist, target string, delay int) {
 		url := target + line
 		response, err := http.Get(url)
 		if err != nil {
-				fmt.Println(Red("[ERROR] " ,err))
-				break
-			}
-		
+			fmt.Println(Red("[ERROR] ", err))
+			break
+		}
+
 		defer response.Body.Close()
 
 		if response.StatusCode == 200 {
@@ -90,7 +143,7 @@ func DirListing(wordlist, target string, delay int) {
 			fmt.Print("\033[K")
 			doc, err := goquery.NewDocumentFromReader(response.Body)
 			if err != nil {
-				fmt.Println(Red("[ERROR] " ,err))
+				fmt.Println(Red("[ERROR] ", err))
 				continue
 			}
 
@@ -116,8 +169,5 @@ func DirListing(wordlist, target string, delay int) {
 			fmt.Println(Green("[FINISH]"), "Total number of directories with listings:", totalVuln)
 		}
 	}
-		
-	
-	
 
 }
