@@ -15,7 +15,7 @@ func Commands() {
 		Flags: []cli.Flag{
 			cli.StringFlag{Name: "target", Usage: "Target Web URL"},
 			cli.StringFlag{Name: "wordlist", Usage: "Select wordlist"},
-			cli.BoolFlag{Name:"trace", Usage: "Enables TRACE method checker."},
+			cli.BoolFlag{Name: "trace", Usage: "Enables TRACE method checker."},
 			cli.BoolFlag{Name: "x-frame-options", Usage: "Enables X-Frame-Options header checker."},
 			cli.BoolFlag{Name: "dirlisting", Usage: "Enables directory listing vulnerability checker."},
 			cli.IntFlag{Name: "delay", Usage: "Delay in miliseconds between each HTTP request", Value: 0},
@@ -40,20 +40,20 @@ func Commands() {
 				for _, file := range files {
 					fmt.Println(Green(file.Name()))
 				}
-			}		
+			}
 			if c.String("target") != "" {
-				if c.Bool("trace"){
-					CheckTrace(c.String("target"));
+				if c.Bool("trace") {
+					CheckTrace(c.String("target"))
 				}
-				if c.Bool("x-frame-options"){
-					CheckXFrameOptions(c.String("target"));
+				if c.Bool("x-frame-options") {
+					CheckXFrameOptions(c.String("target"))
 				}
 				if c.String("wordlist") != "" {
 					if c.Bool("dirlisting") {
 
 						CheckDirListing(c.String("wordlist"), c.String("target"), c.Int("delay"))
 					}
-					
+
 				} else {
 					fmt.Println("Please use --wordlist <WORDLIST.txt>")
 				}

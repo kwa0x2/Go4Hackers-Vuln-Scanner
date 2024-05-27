@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"github.com/kwa0x2/go4hackers-vuln-scanner/pkg/actions"
 	"github.com/mbndr/figlet4go"
-	"fmt"
 )
 
 func main() {
