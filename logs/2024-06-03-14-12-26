@@ -1,0 +1,2 @@
+2024/06/03 14:12:26 attacks.go:105: [INFO] Directory listing attack started for https://www.nettasec.com/
+2024/06/03 14:12:27 attacks.go:165: [NOT VULN] No directory listing vulnerability found for https://www.nettasec.com/
