@@ -12,23 +12,12 @@ Go4Hackers is a simple vulnerability scanner written in Go (Golang) that focuses
 - **HTTP Trace Method Checker:** Verifies if the HTTP TRACE method is enabled, potentially exposing security vulnerabilities.
 - **More is coming soon.**
 
+## Installation
+```
+go install -v github.com/kwa0x2/go4hackers-vuln-scanner@latest
+```
 
 ## Screenshot
 ![Image](https://i.hizliresim.com/m8b5zyz.png)
 
 ![Image](https://i.hizliresim.com/pzo58q3.png)
-
-
-## Usage For Linux
-```
-cd outputs/linux
-chmod +x go4hackers-vuln-scanner
-./go4hackers-vuln-scanner --help
-```
-
-## Usage For Windows
-```
-cd outputs/windows
-icacls go4hackers-vuln-scanner.exe /grant everyone:F
-./go4hackers-vuln-scanner.exe --help
-```
