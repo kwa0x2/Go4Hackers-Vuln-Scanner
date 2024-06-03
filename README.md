@@ -15,6 +15,7 @@ Go4Hackers is a simple vulnerability scanner written in Go (Golang) that focuses
 
 ## Screenshot
 ![Image](https://i.hizliresim.com/m8b5zyz.png)
+
 ![Image](https://i.hizliresim.com/pzo58q3.png)
 
 
